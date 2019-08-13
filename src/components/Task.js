@@ -29,7 +29,6 @@ export default class Task extends React.Component {
 
     let className = "task-list--task";
     if (done) className += " task-list--task-done";
-    const doneStyle = { color: "grey", textDecoration: "line-through" };
 
     const editBtn = editing ? (
       <span
@@ -51,15 +50,21 @@ export default class Task extends React.Component {
     );
 
     return (
-      <li className={className} key={task.id} style={done ? doneStyle : {}}>
+      <li className={className} key={task.id}>
         {editing ? (
-          <input value={editInput} onChange={this.editInputChange} />
+          <input
+            className="ml-1"
+            value={editInput}
+            onChange={this.editInputChange}
+          />
         ) : (
           <span onClick={this.props.doneTask}>{task.task}</span>
         )}
         <div>
           {!done && !editing && (
             <span
+              role="img"
+              aria-label="Done"
               onClick={this.props.doneTask}
               className="color-main"
               style={{ cursor: "pointer", marginLeft: 10 }}
@@ -71,9 +76,14 @@ export default class Task extends React.Component {
           <span
             onClick={this.props.remove}
             className="color-accent"
-            style={{ cursor: "pointer", marginLeft: 10 }}
+            style={{
+              cursor: "pointer",
+              marginLeft: 10
+            }}
+            role="img"
+            aria-label="X"
           >
-            X
+            ✖️
           </span>
           {editBtn}
         </div>

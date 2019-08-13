@@ -5,7 +5,7 @@ export default class ChangeTheme extends React.Component {
     super(props);
 
     this.state = {
-      currentTheme: true
+      currentTheme: false
     };
   }
 
