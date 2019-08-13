@@ -1,0 +1,100 @@
+:root {
+  --main: #29ad99;
+  --accent: #ef7a85;
+  --text: #ffffff;
+  --bg: #131515;
+}
+
+* {
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  transition: 0.3s all;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: var(--text);
+  user-select: none !important;
+}
+
+body {
+  background-color: var(--bg);
+}
+
+input {
+  background: #ffffff1a;
+  border: none;
+  border-radius: 4px;
+  font-size: 18px;
+}
+
+button {
+  background: #ffffff1a;
+  border: none;
+  border-radius: 4px;
+  font-size: 18px;
+}
+
+.color-main {
+  color: var(--main);
+}
+
+.color-accent {
+  color: var(--accent);
+}
+
+.bg-main {
+  background-color: var(--main);
+}
+
+.bg-accent {
+  background-color: var(--accent);
+}
+
+.header {
+  font-weight: 500;
+  font-size: 28px;
+}
+
+.p {
+  font-size: 18px;
+}
+
+.main-view {
+  max-width: 500px;
+}
+
+.top-bar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.task-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.task-list--task {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 0 5px 5px;
+}
+.task-list--task-done {
+  background-color: #ffffff41;
+  color: #474747 !important;
+}
+
+.task-list--task:hover {
+  background-color: #ffffff0a;
+}
+
+.add-task {
+  display: flex;
+  flex-direction: row;
+}
+
+.add-task input {
+  width: 100%;
+}
+
+.add-task button {
+  margin-left: 5px;
+}
