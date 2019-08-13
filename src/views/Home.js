@@ -1,7 +1,6 @@
 import React from "react";
 
-import Task from "./components/Task";
-import ChangeTheme from "./components/ChangeTheme";
+import { Task, ChangeTheme } from "../components";
 
 export default class Home extends React.Component {
   constructor(props) {
@@ -71,7 +70,7 @@ export default class Home extends React.Component {
 
     return (
       <div className="main-view">
-        <div class="top-bar">
+        <div className="top-bar">
           <h1 className="header color-main">Your tasks: {notes.length}</h1>
           <ChangeTheme />
         </div>

@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "My first ever react app",
   "keywords": [],
-  "main": "src/index.js",
+  "main": "src/App.js",
   "dependencies": {
     "react": "16.8.6",
     "react-dom": "16.8.6",
@@ -18,10 +18,5 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
-  "browserslist": [
-    ">0.2%",
-    "not dead",
-    "not ie <= 11",
-    "not op_mini all"
-  ]
+  "browserslist": [">0.2%", "not dead", "not ie <= 11", "not op_mini all"]
 }
