@@ -6,16 +6,12 @@ export default class Home extends React.Component {
   constructor(props) {
     super(props);
 
+    const notes = JSON.parse(localStorage.getItem("notes")) || [];
+
     this.state = {
-      notes: [
-        { id: 1, task: "Make react app", status: false },
-        { id: 2, task: "Learn react", status: true }
-      ],
+      notes: notes,
       input: ""
     };
-
-    this.addNote = this.addNote.bind(this);
-    this.removeNote = this.removeNote.bind(this);
   }
 
   inputChange = event => {
@@ -28,40 +24,57 @@ export default class Home extends React.Component {
     }
   };
 
-  addNote() {
+  addNote = () => {
     if (this.state.input !== "") {
-      this.setState(state => {
-        let notes = state.notes;
-        notes.push({
-          id: notes.length !== 0 ? notes[notes.length - 1].id + 1 : 1,
-          task: state.input
-        });
-        return { notes, input: "" };
-      });
+      this.setState(
+        state => {
+          let notes = state.notes;
+          notes.push({
+            id: notes.length !== 0 ? notes[notes.length - 1].id + 1 : 1,
+            task: state.input
+          });
+          return { notes, input: "" };
+        },
+        () => this.updateLocalStorage()
+      );
     }
-  }
+  };
 
   saveEditedTask = (id, task) => {
     const index = this.state.notes.map(item => item.id).indexOf(id);
-    this.setState(state => {
-      let notes = state.notes;
-      notes[index].task = task;
-      return notes;
-    });
+    this.setState(
+      state => {
+        let notes = state.notes;
+        notes[index].task = task;
+        return notes;
+      },
+      () => this.updateLocalStorage()
+    );
   };
 
   doneTask = id => {
     const index = this.state.notes.map(item => item.id).indexOf(id);
-    this.setState(state => {
-      let notes = state.notes;
-      notes[index].status = true;
-      return notes;
-    });
+    this.setState(
+      state => {
+        let notes = state.notes;
+        notes[index].status = true;
+        return notes;
+      },
+      () => this.updateLocalStorage()
+    );
   };
 
-  removeNote(id) {
-    this.setState({ notes: this.state.notes.filter(item => item.id !== id) });
-  }
+  removeNote = id => {
+    this.setState(
+      { notes: this.state.notes.filter(item => item.id !== id) },
+      () => this.updateLocalStorage()
+    );
+  };
+
+  updateLocalStorage = () => {
+    const json = JSON.stringify(this.state.notes);
+    localStorage.setItem("notes", json);
+  };
 
   render() {
     const { notes, input } = this.state;
@@ -91,7 +104,7 @@ export default class Home extends React.Component {
                 );
               })
             ) : (
-              <p class="p color-accent">No tasks!</p>
+              <p className="p color-accent">No tasks!</p>
             )}
           </ul>
           <div className="add-task">

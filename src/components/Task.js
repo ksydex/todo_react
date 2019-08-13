@@ -39,13 +39,15 @@ export default class Task extends React.Component {
       >
         SAVE
       </span>
-    ) : (
+    ) : !done ? (
       <span
         onClick={this.editNote}
         style={{ color: "gray", cursor: "pointer", marginLeft: 10 }}
       >
         EDIT
       </span>
+    ) : (
+      ""
     );
 
     return (
