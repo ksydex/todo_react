@@ -1,4 +1,5 @@
 import React from "react";
+import { AddInput } from "./index";
 
 export default class Task extends React.Component {
   constructor(props) {
@@ -6,9 +7,15 @@ export default class Task extends React.Component {
 
     this.state = {
       editing: false,
-      editInput: props.task.task
+      editInput: props.task.task,
+      showSubtasks: false
     };
   }
+
+  addSubTask = subTask => {
+    const id = this.props.task.id;
+    this.props.addSubTask(id, subTask);
+  };
 
   editInputChange = event => {
     this.setState({ editInput: event.target.value });
@@ -23,9 +30,13 @@ export default class Task extends React.Component {
     this.setState({ editing: false });
   };
 
+  toggleSubtasks = () => {
+    this.setState({ showSubtasks: !this.state.showSubtasks });
+  };
+
   render() {
     const { task, done } = this.props;
-    const { editing, editInput } = this.state;
+    const { editing, editInput, showSubtasks } = this.state;
 
     let className = "task-list--task";
     if (done) className += " task-list--task-done";
@@ -50,43 +61,73 @@ export default class Task extends React.Component {
     );
 
     return (
-      <li className={className} key={task.id}>
-        {editing ? (
-          <input
-            className="ml-1"
-            value={editInput}
-            onChange={this.editInputChange}
-          />
-        ) : (
-          <span onClick={this.props.doneTask}>{task.task}</span>
-        )}
-        <div>
-          {!done && !editing && (
-            <span
-              role="img"
-              aria-label="Done"
-              onClick={this.props.doneTask}
-              className="color-main"
-              style={{ cursor: "pointer", marginLeft: 10 }}
-            >
-              ✔
+      <li className={showSubtasks ? "bg-white-half" : ""} key={task.id}>
+        <div className={className}>
+          {editing ? (
+            <input
+              className="ml-1"
+              value={editInput}
+              onChange={this.editInputChange}
+            />
+          ) : (
+            <span>
+              <span onClick={this.props.doneTask}>{task.task}</span>
+              <span className="ml-2" onClick={this.toggleSubtasks}>
+                {showSubtasks ? "▲" : "▼"}
+              </span>
             </span>
           )}
+          <div>
+            {!done && !editing && (
+              <span
+                role="img"
+                aria-label="Done"
+                onClick={this.props.doneTask}
+                className="color-main"
+                style={{ cursor: "pointer", marginLeft: 10 }}
+              >
+                ✔
+              </span>
+            )}
 
-          <span
-            onClick={this.props.remove}
-            className="color-accent"
-            style={{
-              cursor: "pointer",
-              marginLeft: 10
-            }}
-            role="img"
-            aria-label="X"
-          >
-            ✖️
-          </span>
-          {editBtn}
+            <span
+              onClick={this.props.remove}
+              className="color-accent"
+              style={{
+                cursor: "pointer",
+                marginLeft: 10
+              }}
+              role="img"
+              aria-label="X"
+            >
+              ✖️
+            </span>
+            {editBtn}
+          </div>
         </div>
+        {showSubtasks ? (
+          <div className="ml-2">
+            {task.subTasks ? (
+              <ul className="task-list">
+                {this.props.task.subTasks.map(item => {
+                  return (
+                    <li className="task-list--task" key={item.id}>
+                      {item.task}
+                    </li>
+                  );
+                })}
+              </ul>
+            ) : (
+              ""
+            )}
+            <AddInput
+              placeholder="Your subtask here"
+              addTask={this.addSubTask}
+            />
+          </div>
+        ) : (
+          ""
+        )}
       </li>
     );
   }

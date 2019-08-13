@@ -27,6 +27,24 @@ export default class Home extends React.Component {
     );
   };
 
+  addSubTask = (id, subTask) => {
+    const index = this.state.notes.map(item => item.id).indexOf(id);
+
+    this.setState(
+      state => {
+        let notes = state.notes;
+        if (notes[index].subTasks)
+          notes[index].subTasks.push({
+            id: notes[index].subTasks.length,
+            task: subTask
+          });
+        else notes[index].subTasks = [{ id: 0, task: subTask }];
+        return notes;
+      },
+      () => this.updateLocalStorage()
+    );
+  };
+
   saveEditedTask = (id, task) => {
     const index = this.state.notes.map(item => item.id).indexOf(id);
     this.setState(
@@ -87,6 +105,7 @@ export default class Home extends React.Component {
                     remove={() => this.removeTask(item.id)}
                     doneTask={() => this.doneTask(item.id)}
                     editTask={this.saveEditedTask}
+                    addSubTask={this.addSubTask}
                   />
                 );
               })
@@ -94,7 +113,7 @@ export default class Home extends React.Component {
               <p className="p color-accent">No tasks!</p>
             )}
           </ul>
-          <AddInput addTask={this.addTask} />
+          <AddInput placeholder="Your task here" addTask={this.addTask} />
         </div>
       </div>
     );

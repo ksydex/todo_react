@@ -21,8 +21,6 @@ export default class AddInput extends React.Component {
 
   addNote = () => {
     const task = this.state.input;
-    console.log(task);
-
     this.props.addTask(task);
     this.setState({ input: "" });
   };
@@ -34,13 +32,13 @@ export default class AddInput extends React.Component {
       <div className="add-task">
         <input
           className="ml-1"
-          placeholder="Your task here"
+          placeholder={this.props.placeholder}
           value={input}
           onChange={this.inputChange}
           onKeyPress={this.handleEnter}
         />
         <button className="bg-main" onClick={this.addNote}>
-          Add
+          +
         </button>
       </div>
     );

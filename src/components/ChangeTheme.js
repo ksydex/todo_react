@@ -12,14 +12,10 @@ export default class ChangeTheme extends React.Component {
   changeTheme = () => {
     this.setState({ currentTheme: !this.state.currentTheme });
     const dark = {
-      main: "#29ad99",
-      accent: "#ef7a85",
       text: "#ffffff",
       bg: "#131515"
     };
     const light = {
-      main: "#29ad99",
-      accent: "#ef7a85",
       text: "#131515",
       bg: "#ffffff"
     };
