@@ -70,7 +70,7 @@ button {
 }
 
 .main-view {
-  max-width: 500px;
+  max-width: 300px;
 }
 
 .top-bar {
@@ -96,6 +96,11 @@ button {
 
 .task-list--task:hover {
   background-color: #ffffff0a;
+}
+
+.task-list .task--name:hover {
+  color: var(--accent);
+  cursor: pointer;
 }
 
 .add-task {

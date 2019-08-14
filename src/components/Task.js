@@ -1,5 +1,4 @@
 import React from "react";
-import { AddInput } from "./index";
 
 export default class Task extends React.Component {
   constructor(props) {
@@ -41,23 +40,51 @@ export default class Task extends React.Component {
     let className = "task-list--task";
     if (done) className += " task-list--task-done";
 
-    const editBtn = editing ? (
-      <span
-        style={{ cursor: "pointer", marginLeft: 10 }}
-        className="color-main"
-        onClick={this.saveNote}
-      >
-        SAVE
-      </span>
-    ) : !done ? (
-      <span
-        onClick={this.editNote}
-        style={{ color: "gray", cursor: "pointer", marginLeft: 10 }}
-      >
-        EDIT
-      </span>
-    ) : (
-      ""
+    const buttons = (
+      <div>
+        {!done && !editing && (
+          <span
+            role="img"
+            aria-label="Done"
+            onClick={this.props.doneTask}
+            className="color-main"
+            style={{ cursor: "pointer", marginLeft: 10 }}
+          >
+            ✔
+          </span>
+        )}
+
+        <span
+          onClick={this.props.remove}
+          className="color-accent"
+          style={{
+            cursor: "pointer",
+            marginLeft: 10
+          }}
+          role="img"
+          aria-label="X"
+        >
+          ✖️
+        </span>
+        {editing ? (
+          <span
+            style={{ cursor: "pointer", marginLeft: 10 }}
+            className="color-main"
+            onClick={this.saveNote}
+          >
+            SAVE
+          </span>
+        ) : !done ? (
+          <span
+            onClick={this.editNote}
+            style={{ color: "gray", cursor: "pointer", marginLeft: 10 }}
+          >
+            EDIT
+          </span>
+        ) : (
+          ""
+        )}
+      </div>
     );
 
     return (
@@ -71,63 +98,13 @@ export default class Task extends React.Component {
             />
           ) : (
             <span>
-              <span onClick={this.props.doneTask}>{task.task}</span>
-              <span className="ml-2" onClick={this.toggleSubtasks}>
-                {showSubtasks ? "▲" : "▼"}
+              <span onClick={this.props.setTaskView} className="task--name">
+                {task.task}
               </span>
             </span>
           )}
-          <div>
-            {!done && !editing && (
-              <span
-                role="img"
-                aria-label="Done"
-                onClick={this.props.doneTask}
-                className="color-main"
-                style={{ cursor: "pointer", marginLeft: 10 }}
-              >
-                ✔
-              </span>
-            )}
-
-            <span
-              onClick={this.props.remove}
-              className="color-accent"
-              style={{
-                cursor: "pointer",
-                marginLeft: 10
-              }}
-              role="img"
-              aria-label="X"
-            >
-              ✖️
-            </span>
-            {editBtn}
-          </div>
+          {buttons}
         </div>
-        {showSubtasks ? (
-          <div className="ml-2">
-            {task.subTasks ? (
-              <ul className="task-list">
-                {this.props.task.subTasks.map(item => {
-                  return (
-                    <li className="task-list--task" key={item.id}>
-                      {item.task}
-                    </li>
-                  );
-                })}
-              </ul>
-            ) : (
-              ""
-            )}
-            <AddInput
-              placeholder="Your subtask here"
-              addTask={this.addSubTask}
-            />
-          </div>
-        ) : (
-          ""
-        )}
       </li>
     );
   }

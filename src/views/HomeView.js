@@ -2,7 +2,7 @@ import React from "react";
 
 import { Task, ChangeTheme, AddInput } from "../components";
 
-export default class Home extends React.Component {
+export default class HomeView extends React.Component {
   constructor(props) {
     super(props);
 
@@ -76,6 +76,10 @@ export default class Home extends React.Component {
     );
   };
 
+  setTaskView = id => {
+    this.props.setTaskView(id);
+  };
+
   updateLocalStorage = () => {
     const json = JSON.stringify(this.state.notes);
     localStorage.setItem("notes", json);
@@ -87,7 +91,7 @@ export default class Home extends React.Component {
     const doneNotes = notes.filter(item => item.status);
 
     return (
-      <div className="main-view">
+      <div>
         <div className="top-bar">
           <h1 className="header color-main">Your tasks: {notes.length}</h1>
           <ChangeTheme />
@@ -106,6 +110,7 @@ export default class Home extends React.Component {
                     doneTask={() => this.doneTask(item.id)}
                     editTask={this.saveEditedTask}
                     addSubTask={this.addSubTask}
+                    setTaskView={() => this.setTaskView(item.id)}
                   />
                 );
               })

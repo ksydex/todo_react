@@ -1,8 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import Home from "./views/Home.js";
+import { HomeView } from "./views";
 
 it("Отрисовывает без ошибки", () => {
   const rootElement = document.createElement("div");
-  ReactDOM.render(<Home />, rootElement);
+  ReactDOM.render(<HomeView />, rootElement);
 });
